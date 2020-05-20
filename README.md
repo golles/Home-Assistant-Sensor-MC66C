@@ -13,24 +13,24 @@ For me, this USB-cable from [Ebay](https://www.ebay.nl/itm/USB-IR-Infrarot-Lese-
 
 # Installation
 There are a few ways you can install this custom component into your Home Assistant.
-A solution I quite often see, is to manually copy all the files from [custom_components/mc66c/](custom_components/mc66c/) folder to your `<home-assistant_path>/config/custom_components/mc66c/`
+A solution I quite often see, is to manually copy all the files from [custom_components/mc66c/](custom_components/mc66c/) folder to your `<home_assistant_path>/config/custom_components/mc66c/`
 
 A better way would be to check out this git repository in your Home Assistant.
-eg. into a folder called `external`. So `<home-assistant_path>/config/external` and then create a symbolic link for the custom component:
+eg. into a folder called `external`. So `<home_assistant_path>/config/external` and then create a symbolic link for the custom component:
 ```bash
-cd <home-assistant_path>/config/custom_components
+cd <home_assistant_path>/config/custom_components
 ln -s ../external/Home-Assistant-Sensor-MC66C/custom_components/mc66c mc66c
 ```
 Doing this allows you to update the files easily from this repo.
 ```bash
-cd <homeassistant_path>/external/Home-Assistant-Sensor-MC66C
+cd <home_assistant_path>/external/Home-Assistant-Sensor-MC66C
 git pull
 ```
 
 # Configuration
 Also, there are many ways to add this sensor to your configuration. You can add the bellow `sensor` and (optional) `group` from the example below directly to your `configuration.yaml` file.
 The way I prefer doing this is making use of the [packages](https://www.home-assistant.io/docs/configuration/packages/) approach.
-In that case you could use the following configuration in `<homeassistant_path>/packages/stadsverwarming.yaml`
+In that case you could use the following configuration in `<home_assistant_path>/packages/stadsverwarming.yaml`
 ```yaml
 sensor:
   - platform: mc66c
@@ -81,15 +81,15 @@ This is optional, the seconds that the sensor will check for updates, 30 is the 
 ```yaml
 resources: list
 ```
- This is optional, however an empty list (the default) will result in no sensors being created. Only the sensors that are being listed will be created. Possible values are:
- `energy` - Energy usage in `GJ`
- `volume` - Volume in `M3`
- `op_hrs` - Operating hours, using unit `hrs`
- `temperature_in` - Temperature in, in `°C`
- `temperature_out` - Temperature out in `°C`
- `temperature_diff` - difference in temperatures in `°C`
- `power` - Power usage in `kW`
- `peak_power` - Peak power in `kWp`
+This is optional, however an empty list (the default) will result in no sensors being created. Only the sensors that are being listed will be created. Possible values are:
+- `energy` - Energy usage in `GJ`  
+- `volume` - Volume in `M3`  
+- `op_hrs` - Operating hours, using unit `hrs`  
+- `temperature_in` - Temperature in, in `°C`  
+- `temperature_out` - Temperature out in `°C`
+- `temperature_diff` - difference in temperatures in `°C`  
+- `power` - Power usage in `kW`
+- `peak_power` - Peak power in `kWp`
 
 # Feedback
 If you're facing any issues or have feedback or a request, feel free to raise an issue and I'll see what I can do. I've to admit I'm not very familiar with `python`, however, I'll try my best to make this component work for everyone. I'm also happy to accept any PR with fixes/improvements.
