@@ -1,6 +1,9 @@
 
 # Intro
 This is a custom component for Home Assistant to get the readings from a Kamstrup Multical 66C meter.
+
+![Dashboard group](group.png)
+
 According to the docs ([attached](5511-%20634%20GB%20Rev%20C1.qxd.pdf)) this might also work on the 66D and 66E versions. I was not able to test this, in case you've got one of these meters and want to give it a try, I would like to hear back from you.
 For more technical details about the communication with the meter, you might want to check out pages 33-36. I also found page 9 with the units interesting.
 
