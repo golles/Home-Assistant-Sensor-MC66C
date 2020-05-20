@@ -16,7 +16,7 @@ A better way would be to check out this git repository in your Home Assistant.
 eg. into a folder called `external`. So `<home-assistant_path>/config/external` and then create a symbolic link for the custom component:
 ```bash
 cd <home-assistant_path>/config/custom_components
-ln -s ../external/Home-Assistant-Sensor-MC66C/custom_components/mc66c custom_components/mc66c
+ln -s ../external/Home-Assistant-Sensor-MC66C/custom_components/mc66c mc66c
 ```
 Doing this allows you to update the files easily from this repo.
 ```bash
