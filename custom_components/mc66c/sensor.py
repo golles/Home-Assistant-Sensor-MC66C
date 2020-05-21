@@ -160,21 +160,22 @@ class MC66CSensor(Entity):
         """Get the latest data and use it to update our sensor state."""
         self.data.update()
 
-        if self.type == 'energy':
-            self._state = int((self.data.data[0]).decode('utf-8'))/1000
-        elif self.type == 'volume':
-            self._state = int((self.data.data[1]).decode('utf-8'))/1000
-        elif self.type == 'op_hrs':
-            self._state = int((self.data.data[2]).decode('utf-8'))
-        elif self.type == 'temperature_in':
-            self._state = int((self.data.data[3]).decode('utf-8'))/100
-        elif self.type == 'temperature_out':
-            self._state = int((self.data.data[4]).decode('utf-8'))/100
-        elif self.type == 'temperature_diff':
-            self._state = int((self.data.data[5]).decode('utf-8'))/100
-        elif self.type == 'power':
-            self._state = int((self.data.data[6]).decode('utf-8'))/10
-        elif self.type == 'flow':
-            self._state = int((self.data.data[7]).decode('utf-8'))/10
-        elif self.type == 'peak_power':
-            self._state = int((self.data.data[8]).decode('utf-8'))/10
+        if self.data.data:
+            if self.type == 'energy':
+                self._state = int((self.data.data[0]).decode('utf-8'))/1000
+            elif self.type == 'volume':
+                self._state = int((self.data.data[1]).decode('utf-8'))/1000
+            elif self.type == 'op_hrs':
+                self._state = int((self.data.data[2]).decode('utf-8'))
+            elif self.type == 'temperature_in':
+                self._state = int((self.data.data[3]).decode('utf-8'))/100
+            elif self.type == 'temperature_out':
+                self._state = int((self.data.data[4]).decode('utf-8'))/100
+            elif self.type == 'temperature_diff':
+                self._state = int((self.data.data[5]).decode('utf-8'))/100
+            elif self.type == 'power':
+                self._state = int((self.data.data[6]).decode('utf-8'))/10
+            elif self.type == 'flow':
+                self._state = int((self.data.data[7]).decode('utf-8'))/10
+            elif self.type == 'peak_power':
+                self._state = int((self.data.data[8]).decode('utf-8'))/10
