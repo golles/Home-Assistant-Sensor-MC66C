@@ -160,7 +160,7 @@ class MC66CSensor(Entity):
         """Get the latest data and use it to update our sensor state."""
         self.data.update()
 
-        if self.data.data:
+        try:
             if self.type == 'energy':
                 self._state = int((self.data.data[0]).decode('utf-8'))/1000
             elif self.type == 'volume':
@@ -179,3 +179,5 @@ class MC66CSensor(Entity):
                 self._state = int((self.data.data[7]).decode('utf-8'))/10
             elif self.type == 'peak_power':
                 self._state = int((self.data.data[8]).decode('utf-8'))/10
+        except (IndexError, ValueError) as error:
+            _LOGGER.exception("Error = %s", error)
