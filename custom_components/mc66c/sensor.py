@@ -21,15 +21,15 @@ group:
   mc66c:
     name: Stadsverwarming meter
     entities:
-      - sensor.mc66c_energy
-      - sensor.mc66c_volume
-      - sensor.mc66c_operating_hours
-      - sensor.mc66c_temperature_in
-      - sensor.mc66c_temperature_out
-      - sensor.mc66c_temperature_difference
-      - sensor.mc66c_power
-      - sensor.mc66c_peak_power
-      - sensor.mc66c_flow
+      - sensor.stadsverwarming_energy
+      - sensor.stadsverwarming_volume
+      - sensor.stadsverwarming_operating_hours
+      - sensor.stadsverwarming_temperature_in
+      - sensor.stadsverwarming_temperature_out
+      - sensor.stadsverwarming_temperature_difference
+      - sensor.stadsverwarming_power
+      - sensor.stadsverwarming_peak_power
+      - sensor.stadsverwarming_flow
 """
 
 import logging
@@ -120,7 +120,7 @@ class MC66CData(object):
             self.data = new_data
             _LOGGER.info("Successfully fetched new data: %s", self.data)
         else:
-            _LOGGER.warning("Skipping, incomplete data: %s", self.data)
+            _LOGGER.warning("Skipping, incomplete data (%s) : %s", len(new_data), new_data)
 
 
 class MC66CSensor(Entity):

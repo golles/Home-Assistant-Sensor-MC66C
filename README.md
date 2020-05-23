@@ -34,6 +34,7 @@ In that case you could use the following configuration in `<home_assistant_path>
 ```yaml
 sensor:
   - platform: mc66c
+    name: Stadsverwarming
     port: /dev/ttyUSB1
     scan_interval: 30
     resources:
@@ -51,15 +52,15 @@ group:
   mc66c:
     name: Stadsverwarming meter
     entities:
-      - sensor.mc66c_energy
-      - sensor.mc66c_volume
-      - sensor.mc66c_operating_hours
-      - sensor.mc66c_temperature_in
-      - sensor.mc66c_temperature_out
-      - sensor.mc66c_temperature_difference
-      - sensor.mc66c_power
-      - sensor.mc66c_peak_power
-      - sensor.mc66c_flow
+      - sensor.stadsverwarming_energy
+      - sensor.stadsverwarming_volume
+      - sensor.stadsverwarming_operating_hours
+      - sensor.stadsverwarming_temperature_in
+      - sensor.stadsverwarming_temperature_out
+      - sensor.stadsverwarming_temperature_difference
+      - sensor.stadsverwarming_power
+      - sensor.stadsverwarming_peak_power
+      - sensor.stadsverwarming_flow
 ```
 ## Configuration variables
 This component has the following configuration variables:
@@ -69,7 +70,12 @@ platform: mc66c
  This is required, to use this platform for the sensor. You can't change this.
 
 ```yaml
-port: '/dev/ttyUSB1'
+name: Stadsverwarming
+```
+This is optional, the name will be used to prefix the sensors, `mc66c` will be used if the name is specified.
+
+```yaml
+port: /dev/ttyUSB1
 ```
 This is required, the port that has the IR cable, note if you use docker, that you have to expose this device to the container.
 
