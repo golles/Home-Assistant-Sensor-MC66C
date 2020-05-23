@@ -116,11 +116,12 @@ class MC66CData(object):
         new_data = mc66c.read(87).split()
         mc66c.close()
 
-        if len(new_data) == 10:
+        num_fields = len(new_data)
+        if num_fields == 10:
             self.data = new_data
             _LOGGER.info("Successfully fetched new data: %s", self.data)
         else:
-            _LOGGER.warning("Skipping, incomplete data (%s) : %s", len(new_data), new_data)
+            _LOGGER.warning("Skipping, incomplete data (%s) : %s", num_fields, new_data)
 
 
 class MC66CSensor(Entity):
