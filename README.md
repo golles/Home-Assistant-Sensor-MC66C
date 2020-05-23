@@ -34,7 +34,7 @@ In that case you could use the following configuration in `<home_assistant_path>
 ```yaml
 sensor:
   - platform: mc66c
-    port: '/dev/ttyUSB1'
+    port: /dev/ttyUSB1
     scan_interval: 30
     resources:
       - energy
