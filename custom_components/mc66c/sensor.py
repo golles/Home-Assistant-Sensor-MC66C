@@ -4,7 +4,7 @@ configuration.yaml / packages/stadsverwarming.yaml
 sensor:
   - platform: mc66c
     name: Stadsverwarming
-    port: '/dev/ttyUSB1'
+    port: /dev/ttyUSB1
     scan_interval: 30
     resources:
       - energy
@@ -21,15 +21,15 @@ group:
   mc66c:
     name: Stadsverwarming meter
     entities:
-      - sensor.mc66c_energy
-      - sensor.mc66c_volume
-      - sensor.mc66c_operating_hours
-      - sensor.mc66c_temperature_in
-      - sensor.mc66c_temperature_out
-      - sensor.mc66c_temperature_difference
-      - sensor.mc66c_power
-      - sensor.mc66c_peak_power
-      - sensor.mc66c_flow
+      - sensor.stadsverwarming_energy
+      - sensor.stadsverwarming_volume
+      - sensor.stadsverwarming_operating_hours
+      - sensor.stadsverwarming_temperature_in
+      - sensor.stadsverwarming_temperature_out
+      - sensor.stadsverwarming_temperature_difference
+      - sensor.stadsverwarming_power
+      - sensor.stadsverwarming_peak_power
+      - sensor.stadsverwarming_flow
 """
 
 import logging
@@ -57,7 +57,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Required(CONF_NAME, default=DEFAULT_NAME): cv.string,
+    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     vol.Required(CONF_PORT): cv.string,
     vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): cv.time_period,
     vol.Required(CONF_RESOURCES, default=[]):
@@ -83,7 +83,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
         if sensor_type not in SENSOR_TYPES:
             SENSOR_TYPES[sensor_type] = [
-                sensor_type.title(), '', 'mdi:eye']
+                sensor_type.title(), "", "mdi:eye"]
 
         entities.append(MC66CSensor(name, data, sensor_type))
 
@@ -102,23 +102,26 @@ class MC66CData(object):
     def update(self):
         """Update the data from the serial port."""
         # See page 33-36 in 5511- 634 GB Rev C1.qxd.pdf -  4. Data communication.
-
-        # Thank you @RuntimeError123 for the following 13 lines of code!
         mc66c = serial.Serial(port=self._port,
                               bytesize=serial.SEVENBITS,
                               parity=serial.PARITY_EVEN,
-                              stopbits=serial.STOPBITS_ONE,
+                              stopbits=serial.STOPBITS_TWO,
                               timeout=2)
         mc66c.baudrate = 300
-        mc66c.write('/#1'.encode('utf-8'))
+        mc66c.write("/#1".encode("utf-8"))
         mc66c.flush()
         sleep(1)
         mc66c.baudrate = 1200
         mc66c.flushInput()
-        self.data = mc66c.read(87).split()
+        new_data = mc66c.read(87).split()
         mc66c.close()
 
-        _LOGGER.debug("Data = %s", self.data)
+        num_fields = len(new_data)
+        if num_fields == 10:
+            self.data = new_data
+            _LOGGER.info("Successfully fetched new data: %s", self.data)
+        else:
+            _LOGGER.warning("Skipping, incomplete data (%s) : %s", num_fields, new_data)
 
 
 class MC66CSensor(Entity):
@@ -129,11 +132,11 @@ class MC66CSensor(Entity):
         self.data = data
         self.type = sensor_type
 
-        self._name = '{} {}'.format(name, SENSOR_TYPES[self.type][0])
+        self._name = "{} {}".format(name, SENSOR_TYPES[self.type][0])
         self._unit_of_measurement = SENSOR_TYPES[self.type][1]
         self._icon = SENSOR_TYPES[self.type][2]
         self._state = None
-        self._unique_id = '{}_{}_{}'.format(DOMAIN, name, SENSOR_TYPES[self.type][0])
+        self._unique_id = "{}_{}_{}".format(DOMAIN, name, SENSOR_TYPES[self.type][0])
 
         self.update()
 
@@ -167,23 +170,23 @@ class MC66CSensor(Entity):
         self.data.update()
 
         try:
-            if self.type == 'energy':
-                self._state = int((self.data.data[0]).decode('utf-8')) / 1000
-            elif self.type == 'volume':
-                self._state = int((self.data.data[1]).decode('utf-8')) / 1000
-            elif self.type == 'op_hrs':
-                self._state = int((self.data.data[2]).decode('utf-8'))
-            elif self.type == 'temperature_in':
-                self._state = int((self.data.data[3]).decode('utf-8')) / 100
-            elif self.type == 'temperature_out':
-                self._state = int((self.data.data[4]).decode('utf-8')) / 100
-            elif self.type == 'temperature_diff':
-                self._state = int((self.data.data[5]).decode('utf-8')) / 100
-            elif self.type == 'power':
-                self._state = int((self.data.data[6]).decode('utf-8')) / 10
-            elif self.type == 'flow':
-                self._state = int((self.data.data[7]).decode('utf-8')) / 10
-            elif self.type == 'peak_power':
-                self._state = int((self.data.data[8]).decode('utf-8')) / 10
-        except (IndexError, ValueError) as error:
-            _LOGGER.error("Error = %s", error)
+            if self.type == "energy":
+                self._state = int((self.data.data[0]).decode("utf-8")) / 1000
+            elif self.type == "volume":
+                self._state = int((self.data.data[1]).decode("utf-8")) / 1000
+            elif self.type == "op_hrs":
+                self._state = int((self.data.data[2]).decode("utf-8"))
+            elif self.type == "temperature_in":
+                self._state = int((self.data.data[3]).decode("utf-8")) / 100
+            elif self.type == "temperature_out":
+                self._state = int((self.data.data[4]).decode("utf-8")) / 100
+            elif self.type == "temperature_diff":
+                self._state = int((self.data.data[5]).decode("utf-8")) / 100
+            elif self.type == "power":
+                self._state = int((self.data.data[6]).decode("utf-8")) / 10
+            elif self.type == "flow":
+                self._state = int((self.data.data[7]).decode("utf-8")) / 10
+            elif self.type == "peak_power":
+                self._state = int((self.data.data[8]).decode("utf-8")) / 10
+        except Exception as error:
+            _LOGGER.error("Error=%s parsing data=%s", error, self.data.data)
