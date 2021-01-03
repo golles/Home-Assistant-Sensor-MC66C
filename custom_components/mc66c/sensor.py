@@ -88,7 +88,7 @@ class MC66CReader(object):
         data = []
 
         num_fields = len(reading)
-        if num_fields == 10:
+        if num_fields is 10:
             _LOGGER.info("Successfully fetched new data: %s", reading)
 
             try:
@@ -155,4 +155,6 @@ class MC66CSensor(Entity):
     def update(self):
         """Get the data and use it to update our sensor state."""
         self.reader.read()
-        self._state = self.reader.data[self._data_position]
+
+        if self.reader.data is not None:
+            self._state = self.reader.data[self._data_position]
