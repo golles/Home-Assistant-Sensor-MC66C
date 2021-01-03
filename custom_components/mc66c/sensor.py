@@ -107,7 +107,7 @@ class MC66CReader(object):
             except Exception as error:
                 _LOGGER.info("Error=%s parsing data=%s", error, reading)
         else:
-            _LOGGER.info("Skipping, incomplete data (%s) : %s", num_fields, data)
+            _LOGGER.info("Skipping, received %s fields, this should be 10. Data: %s", num_fields, reading)
 
 
 class MC66CSensor(Entity):
@@ -157,4 +157,8 @@ class MC66CSensor(Entity):
         self.reader.read()
 
         if self.reader.data is not None:
-            self._state = self.reader.data[self._data_position]
+            new_state = self.reader.data[self._data_position]
+            if self.type is "energy" and abs(new_state - self._state)/self._state > 1:
+                _LOGGER.info("Skipping energy update; new value: %s is much different than previous: %s", new_state, self._state)
+            else:
+                self._state = new_state            
