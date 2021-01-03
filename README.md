@@ -97,6 +97,13 @@ This is optional, however an empty list (the default) will result in no sensors 
 - `power` - Power usage in `kW`
 - `peak_power` - Peak power in `kWp`
 
+### Logging
+```yaml
+logger:
+  logs:
+    custom_components.mc66c: info
+```
+
 # Feedback
 If you're facing any issues or have feedback or a request, feel free to raise an issue and I'll see what I can do. I've to admit I'm not very familiar with `python`, however, I'll try my best to make this component work for everyone. I'm also happy to accept any PR with fixes/improvements.
 

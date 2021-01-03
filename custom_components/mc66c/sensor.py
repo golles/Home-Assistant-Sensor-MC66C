@@ -1,37 +1,3 @@
-"""
-configuration.yaml / packages/stadsverwarming.yaml
-
-sensor:
-  - platform: mc66c
-    name: Stadsverwarming
-    port: /dev/ttyUSB1
-    scan_interval: 30
-    resources:
-      - energy
-      - volume
-      - op_hrs
-      - temperature_in
-      - temperature_out
-      - temperature_diff
-      - power
-      - flow
-      - peak_power
-
-group:
-  mc66c:
-    name: Stadsverwarming meter
-    entities:
-      - sensor.stadsverwarming_energy
-      - sensor.stadsverwarming_volume
-      - sensor.stadsverwarming_operating_hours
-      - sensor.stadsverwarming_temperature_in
-      - sensor.stadsverwarming_temperature_out
-      - sensor.stadsverwarming_temperature_difference
-      - sensor.stadsverwarming_power
-      - sensor.stadsverwarming_peak_power
-      - sensor.stadsverwarming_flow
-"""
-
 import logging
 import voluptuous as vol
 import serial
@@ -64,14 +30,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
         vol.All(cv.ensure_list, [vol.In(SENSOR_TYPES)]),
 })
 
-
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the sensors."""
     name = config.get(CONF_NAME)
     port = config.get(CONF_PORT)
 
     try:
-        data = MC66CData(port)
+        reader = MC66CReader(port)
     except RunTimeError:
         _LOGGER.error("Unable to connect to %s", port)
         return False
@@ -85,13 +50,13 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
             SENSOR_TYPES[sensor_type] = [
                 sensor_type.title(), "", "mdi:eye"]
 
-        entities.append(MC66CSensor(name, data, sensor_type))
+        entities.append(MC66CSensor(name, reader, sensor_type))
 
     add_entities(entities)
 
 
-class MC66CData(object):
-    """Representation of the data from the MC66C."""
+class MC66CReader(object):
+    """Reader object that communicates with the MC66C."""
 
     def __init__(self, port):
         """Initialize the serial reader."""
@@ -99,8 +64,8 @@ class MC66CData(object):
         self.data = None
 
     @Throttle(DEFAULT_SCAN_INTERVAL)
-    def update(self):
-        """Update the data from the serial port."""
+    def read(self):
+        """Read data from the serial port."""
         # See page 33-36 in 5511- 634 GB Rev C1.qxd.pdf -  4. Data communication.
         mc66c = serial.Serial(port=self._port,
                               bytesize=serial.SEVENBITS,
@@ -113,30 +78,52 @@ class MC66CData(object):
         sleep(1)
         mc66c.baudrate = 1200
         mc66c.flushInput()
-        new_data = mc66c.read(87).split()
+        reading = mc66c.read(87).split()
         mc66c.close()
 
-        num_fields = len(new_data)
+        self.validateAndSetData(reading)
+
+    def validateAndSetData(self, reading):
+        """New data needs validation before we continue."""
+        data = []
+
+        num_fields = len(reading)
         if num_fields == 10:
-            self.data = new_data
-            _LOGGER.info("Successfully fetched new data: %s", self.data)
+            _LOGGER.info("Successfully fetched new data: %s", reading)
+
+            try:
+                data.append(int((reading[0]).decode("utf-8")) / 1000) # Energy.
+                data.append(int((reading[1]).decode("utf-8")) / 1000) # Volume.
+                data.append(int((reading[2]).decode("utf-8"))) # Op_hrs.
+                data.append(int((reading[3]).decode("utf-8")) / 100) # Temperature_in.
+                data.append(int((reading[4]).decode("utf-8")) / 100) # Temperature_out.
+                data.append(int((reading[5]).decode("utf-8")) / 100) # Temperature_diff.
+                data.append(int((reading[6]).decode("utf-8")) / 10) # Power.
+                data.append(int((reading[7]).decode("utf-8")) / 10) # Flow.
+                data.append(int((reading[8]).decode("utf-8")) / 10) # Peak_power.
+            
+                # Only setting the data at the end, if parsing fails for one or more sensors, the data was corrupt and this reading should be skipped.
+                self.data = data 
+            except Exception as error:
+                _LOGGER.info("Error=%s parsing data=%s", error, reading)
         else:
-            _LOGGER.warning("Skipping, incomplete data (%s) : %s", num_fields, new_data)
+            _LOGGER.info("Skipping, incomplete data (%s) : %s", num_fields, data)
 
 
 class MC66CSensor(Entity):
     """Representation of a sensor."""
 
-    def __init__(self, name, data, sensor_type):
+    def __init__(self, name, reader, sensor_type):
         """Initialize the sensor."""
-        self.data = data
+        self.reader = reader
         self.type = sensor_type
 
-        self._name = "{} {}".format(name, SENSOR_TYPES[self.type][0])
-        self._unit_of_measurement = SENSOR_TYPES[self.type][1]
-        self._icon = SENSOR_TYPES[self.type][2]
+        self._data_position = SENSOR_TYPES[self.type][0]
+        self._name = "{} {}".format(name, SENSOR_TYPES[self.type][1])
+        self._unit_of_measurement = SENSOR_TYPES[self.type][2]
+        self._icon = SENSOR_TYPES[self.type][3]
         self._state = None
-        self._unique_id = "{}_{}_{}".format(DOMAIN, name, SENSOR_TYPES[self.type][0])
+        self._unique_id = "{}_{}_{}".format(DOMAIN, name, SENSOR_TYPES[self.type][1])
 
         self.update()
 
@@ -167,26 +154,5 @@ class MC66CSensor(Entity):
 
     def update(self):
         """Get the data and use it to update our sensor state."""
-        self.data.update()
-
-        try:
-            if self.type == "energy":
-                self._state = int((self.data.data[0]).decode("utf-8")) / 1000
-            elif self.type == "volume":
-                self._state = int((self.data.data[1]).decode("utf-8")) / 1000
-            elif self.type == "op_hrs":
-                self._state = int((self.data.data[2]).decode("utf-8"))
-            elif self.type == "temperature_in":
-                self._state = int((self.data.data[3]).decode("utf-8")) / 100
-            elif self.type == "temperature_out":
-                self._state = int((self.data.data[4]).decode("utf-8")) / 100
-            elif self.type == "temperature_diff":
-                self._state = int((self.data.data[5]).decode("utf-8")) / 100
-            elif self.type == "power":
-                self._state = int((self.data.data[6]).decode("utf-8")) / 10
-            elif self.type == "flow":
-                self._state = int((self.data.data[7]).decode("utf-8")) / 10
-            elif self.type == "peak_power":
-                self._state = int((self.data.data[8]).decode("utf-8")) / 10
-        except Exception as error:
-            _LOGGER.error("Error=%s parsing data=%s", error, self.data.data)
+        self.reader.read()
+        self._state = self.reader.data[self._data_position]
