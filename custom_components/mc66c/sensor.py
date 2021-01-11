@@ -158,7 +158,12 @@ class MC66CSensor(Entity):
 
         if self.reader.data is not None:
             new_state = self.reader.data[self._data_position]
-            if self.type is "energy" and abs(new_state - self._state)/self._state > 1:
+            
+            if (
+                self._state is not None and 
+                self._data_position is 0 and 
+                abs(new_state - self._state) / self._state > 1
+            ):
                 _LOGGER.info("Skipping energy update; new value: %s is much different than previous: %s", new_state, self._state)
             else:
-                self._state = new_state            
+                self._state = new_state        
