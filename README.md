@@ -1,3 +1,7 @@
+# I no longer own this device.
+**I'm happy to accepts PR's, but I won't be able to develop and test changes myself. If you want to take over the development, let me know.**
+
+---
 
 # Intro
 This is a custom component for Home Assistant to get the readings from a Kamstrup Multical 66C meter.
