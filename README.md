@@ -32,6 +32,8 @@ git pull
 ```
 
 # Configuration
+Before you add the configuration, make sure you have added all the files and have restarted your Home Assistant.
+ 
 Also, there are many ways to add this sensor to your configuration. You can add the bellow `sensor` and (optional) `group` from the example below directly to your `configuration.yaml` file.
 The way I prefer doing this is making use of the [packages](https://www.home-assistant.io/docs/configuration/packages/) approach.
 In that case you could use the following configuration in `<home_assistant_path>/packages/stadsverwarming.yaml`
