@@ -12,8 +12,10 @@ According to the docs ([attached](5511-%20634%20GB%20Rev%20C1.qxd.pdf)) this mig
 For more technical details about the communication with the meter, you might want to check out pages 33-36. I also found page 9 with the units interesting.
 
 # Requirements
-To use this component, you'll need a cable with an IR read/write head and connect your machine running Home Assistant directly to the IR sensor of the Kamstrup Multical 66C meter.
-For me, this USB-cable from [Ebay](https://www.ebay.nl/itm/USB-IR-Infrarot-Lese-Schreibkopf-f%C3%BCr-Stromz%C3%A4hler-Smart-Meter/274095213723) worked perfectly. The one from [Volkszaehler.org](https://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf) seems also to work fine, but might be harder to get, though the PCB schematics looks to be available under an open source hardware license from https://github.com/Hal9k-dk/kamstrup (plus BOM and more info on http://wiki.hal9k.dk/projects/kamstrup).
+To use this component, you'll need a cable with an IR read/write head and connect your machine running Home Assistant directly to the IR sensor of the Kamstrup meter.
+The one from [Volkszaehler.org](https://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf) seems to work fine, but might be hard to get.  
+The read/write head looks like this:  
+![cable](https://user-images.githubusercontent.com/2211503/136630069-9da49f09-6f9c-4618-8255-40195405f21a.jpg)
 
 # Installation
 There are a few ways you can install this custom component into your Home Assistant.
