@@ -101,6 +101,7 @@ class MC66CReader(object):
                 data.append(int((reading[6]).decode("utf-8")) / 10) # Power.
                 data.append(int((reading[7]).decode("utf-8")) / 10) # Flow.
                 data.append(int((reading[8]).decode("utf-8")) / 10) # Peak_power.
+                data.append(int((reading[9]).decode("utf-8"))) # Info_code
             
                 # Only setting the data at the end, if parsing fails for one or more sensors, the data was corrupt and this reading should be skipped.
                 self.data = data 
