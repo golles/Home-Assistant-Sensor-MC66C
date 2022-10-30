@@ -96,7 +96,7 @@ class MC66CReader(object):
                     if (len(c)) != 7:
   	                raise Exception('Received invalid datafield length')
 
-                data.append(int((reading[0]).decode("utf-8")) / 100) # Energy.
+                data.append(int((reading[0]).decode("utf-8")) / 1000) # Energy.
                 data.append(int((reading[1]).decode("utf-8")) / 1000) # Volume.
                 data.append(int((reading[2]).decode("utf-8"))) # Op_hrs.
                 data.append(int((reading[3]).decode("utf-8")) / 100) # Temperature_in.
