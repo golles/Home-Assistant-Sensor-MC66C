@@ -92,6 +92,10 @@ class MC66CReader(object):
             _LOGGER.info("Successfully fetched new data: %s", reading)
 
             try:
+                for c in reading:
+                    if (len(c)) != 7:
+  	                raise Exception('Received invalid datafield length')
+
                 data.append(int((reading[0]).decode("utf-8")) / 1000) # Energy.
                 data.append(int((reading[1]).decode("utf-8")) / 1000) # Volume.
                 data.append(int((reading[2]).decode("utf-8"))) # Op_hrs.
@@ -101,6 +105,7 @@ class MC66CReader(object):
                 data.append(int((reading[6]).decode("utf-8")) / 10) # Power.
                 data.append(int((reading[7]).decode("utf-8")) / 10) # Flow.
                 data.append(int((reading[8]).decode("utf-8")) / 10) # Peak_power.
+                data.append(int((reading[9]).decode("utf-8"))) # Info_code
             
                 # Only setting the data at the end, if parsing fails for one or more sensors, the data was corrupt and this reading should be skipped.
                 self.data = data 

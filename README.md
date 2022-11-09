@@ -55,6 +55,7 @@ sensor:
       - power
       - flow
       - peak_power
+      - info_code
 
 group:
   mc66c:

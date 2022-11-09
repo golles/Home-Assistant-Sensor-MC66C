@@ -17,4 +17,5 @@ SENSOR_TYPES = {
     'power': [6, 'Power', 'kW', 'mdi:flash'],
     'flow': [7, 'Flow', 'l/h', 'mdi:water'],
     'peak_power': [8, 'Peak power', 'kWp', 'mdi:flash'],
+    'info_code': [9, 'Info code', '', 'mdi:alert-outline'],
 }
