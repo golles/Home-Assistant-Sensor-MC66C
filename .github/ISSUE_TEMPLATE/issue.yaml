@@ -47,7 +47,7 @@ body:
     id: logs
     attributes:
       label: Home Assistant log
-      description: Paste your full log here, [how to enable logs](../blob/main/README.md#logging).
+      description: Paste your full log here, [how to enable logs](../blob/master/README.md#logging).
       render: shell
 
   - type: textarea
