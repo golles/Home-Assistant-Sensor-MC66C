@@ -2,6 +2,7 @@
   "domain": "mc66c",
   "name": "Kamstrup Multical 66C meter reader",
   "documentation": "https://github.com/golles/Home-Assistant-Sensor-MC66C",
+  "iot_class": "local_polling",
   "issue_tracker": "https://github.com/golles/Home-Assistant-Sensor-MC66C/issues",
   "version": "1.0.0",
   "codeowners": ["@golles"],
