@@ -4,10 +4,6 @@
   "documentation": "https://github.com/golles/Home-Assistant-Sensor-MC66C",
   "issue_tracker": "https://github.com/golles/Home-Assistant-Sensor-MC66C/issues",
   "version": "1.0.0",
-  "codeowners": [
-    "@golles"
-  ],
-  "requirements": [
-    "pyserial"
-  ]
+  "codeowners": ["@golles"],
+  "requirements": ["pyserial==3.5"]
 }

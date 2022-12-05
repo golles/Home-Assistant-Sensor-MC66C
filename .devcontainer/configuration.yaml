@@ -1,0 +1,40 @@
+default_config:
+
+logger:
+  default: info
+  logs:
+    custom_components.mc66c: debug
+
+sensor:
+  - platform: mc66c
+    name: Stadsverwarming
+    port: /dev/ttyUSB1
+    scan_interval: 30
+    resources:
+      - energy
+      - volume
+      - op_hrs
+      - temperature_in
+      - temperature_out
+      - temperature_diff
+      - power
+      - flow
+      - peak_power
+      - info_code
+
+group:
+  mc66c:
+    name: Stadsverwarming meter
+    entities:
+      - sensor.stadsverwarming_energy
+      - sensor.stadsverwarming_volume
+      - sensor.stadsverwarming_operating_hours
+      - sensor.stadsverwarming_temperature_in
+      - sensor.stadsverwarming_temperature_out
+      - sensor.stadsverwarming_temperature_difference
+      - sensor.stadsverwarming_power
+      - sensor.stadsverwarming_peak_power
+      - sensor.stadsverwarming_flow
+
+# If you need to debug uncomment the line below (doc: https://www.home-assistant.io/integrations/debugpy/)
+# debugpy:
