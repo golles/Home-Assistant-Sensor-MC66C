@@ -24,7 +24,7 @@ body:
       required: true
     attributes:
       label: What version of this integration has the issue?
-      placeholder: 1.0.0
+      placeholder: 1.1.0
       description: >
         Can be found in the Configuration panel -> Info.
 
