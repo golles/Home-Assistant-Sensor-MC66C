@@ -6,8 +6,7 @@ import homeassistant.helpers.config_validation as cv
 import serial
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import (CONF_NAME, CONF_PORT, CONF_RESOURCES,
-                                 CONF_SCAN_INTERVAL)
+from homeassistant.const import CONF_NAME, CONF_PORT, CONF_RESOURCES, CONF_SCAN_INTERVAL
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 
