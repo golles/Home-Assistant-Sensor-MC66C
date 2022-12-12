@@ -1,13 +1,10 @@
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Repo stars][stars-shield]][stars]
 [![License][license-shield]](LICENSE)
-
 [![GitHub Activity][commits-shield]][commits]
 [![Project Maintenance][maintenance-shield]][maintainer]
-
 [![hacs][hacs-shield]][hacs]
 [![hacs][hacs-installs-shield]][hacs]
-
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 # I no longer own this device.
