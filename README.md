@@ -135,7 +135,7 @@ If you're facing any issues or have feedback or a request, feel free to raise an
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/golles/Home-Assistant-Sensor-MC66C.svg?style=for-the-badge
 [commits]: https://github.com/golles/Home-Assistant-Sensor-MC66C/commits/main
-[hacs]: https://github.com/custom-components/hacs
+[hacs]: https://github.com/hacs/integration
 [hacs-shield]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
 [hacs-installs-shield]: https://raw.githubusercontent.com/golles/ha-active-installation-badges/main/mc66c.svg
 [license-shield]: https://img.shields.io/github/license/golles/Home-Assistant-Sensor-MC66C.svg?style=for-the-badge
