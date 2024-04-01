@@ -1,4 +1,5 @@
 """Constants for component."""
+
 import logging
 from time import sleep
 

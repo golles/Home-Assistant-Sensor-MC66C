@@ -1,4 +1,5 @@
 """Constants for component."""
+
 from datetime import timedelta
 
 DOMAIN = "mc66c"
