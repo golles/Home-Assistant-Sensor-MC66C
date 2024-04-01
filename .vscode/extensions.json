@@ -5,8 +5,6 @@
     "ms-python.black-formatter",
     "ms-python.python",
     "ms-python.isort",
-    "ms-python.vscode-pylance",
-    "ryanluker.vscode-coverage-gutters",
-    "streetsidesoftware.code-spell-checker"
+    "ms-python.vscode-pylance"
   ]
 }

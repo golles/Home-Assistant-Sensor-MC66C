@@ -1,2 +1,4 @@
-homeassistant
-pyserial==3.5
+-r requirements.txt
+pip>=21.0,<24.1
+colorlog
+isort
