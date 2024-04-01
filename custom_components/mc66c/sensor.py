@@ -3,13 +3,13 @@
 import logging
 from time import sleep
 
-import homeassistant.helpers.config_validation as cv
-import serial
-import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import CONF_NAME, CONF_PORT, CONF_RESOURCES, CONF_SCAN_INTERVAL
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
+import serial
+import voluptuous as vol
 
 from .const import DEFAULT_NAME, DEFAULT_SCAN_INTERVAL, DOMAIN, SENSOR_TYPES
 
