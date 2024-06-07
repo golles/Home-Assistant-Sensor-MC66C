@@ -4,7 +4,7 @@
 [![GitHub Activity][commits-shield]][commits]
 [![Project Maintenance][maintenance-shield]][maintainer]
 [![hacs][hacs-shield]][hacs]
-[![hacs][hacs-installs-shield]][hacs]
+[![installs][hacs-installs-shield]][ha-active-installation-badges]
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 # I no longer own this device.
@@ -137,7 +137,8 @@ If you're facing any issues or have feedback or a request, feel free to raise an
 [commits]: https://github.com/golles/Home-Assistant-Sensor-MC66C/commits/main
 [hacs]: https://github.com/hacs/integration
 [hacs-shield]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
-[hacs-installs-shield]: https://raw.githubusercontent.com/golles/ha-active-installation-badges/main/mc66c.svg
+[ha-active-installation-badges]: https://github.com/golles/ha-active-installation-badges
+[hacs-installs-shield]: https://raw.githubusercontent.com/golles/ha-active-installation-badges/main/badges/mc66c.svg
 [license-shield]: https://img.shields.io/github/license/golles/Home-Assistant-Sensor-MC66C.svg?style=for-the-badge
 [maintainer]: https://github.com/golles
 [maintenance-shield]: https://img.shields.io/badge/maintainer-golles-blue.svg?style=for-the-badge
