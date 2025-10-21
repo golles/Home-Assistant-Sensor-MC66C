@@ -7,8 +7,9 @@
 [![installs][hacs-installs-shield]][ha-active-installation-badges]
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
-# I no longer own this device.
-**I'm happy to accepts PR's, but I won't be able to develop and test changes myself. If you want to take over the development, let me know.**
+> [!CAUTION]
+> I no longer own this device.
+> I'm happy to accept PR's, but I won't be able to develop and test changes myself. If you want to take over the development, let me know.
 
 ---
 
