@@ -19,7 +19,7 @@ jobs:
     name: Check style formatting
     steps:
       - name: Check out code from GitHub
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup python
         uses: actions/setup-python@v6
